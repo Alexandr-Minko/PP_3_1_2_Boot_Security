@@ -15,8 +15,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/")
     public String showAllUsers(Model model) {
@@ -31,7 +29,6 @@ public class UserController {
 
     @PostMapping()
     public String saveUser(@ModelAttribute("user") User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
         return "redirect:/admin/";
     }
@@ -50,7 +47,6 @@ public class UserController {
 
     @PutMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.updateUser(user);
         return "redirect:/admin/";
     }
@@ -60,5 +56,4 @@ public class UserController {
         userService.deleteUser(id);
         return "redirect:/admin/";
     }
-
 }
